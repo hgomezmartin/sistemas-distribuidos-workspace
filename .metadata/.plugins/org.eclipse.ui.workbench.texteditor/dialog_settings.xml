@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="false"/>
+		<list key="findhistory">
+			<item value="clean"/>
+			<item value="compile"/>
+			<item value="env"/>
+			<item value="property envir"/>
+		</list>
+	</section>
+</section>

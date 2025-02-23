@@ -1,1 +1,1 @@
-memberSearchIndex = [{"p":"MiPaquete","c":"MiClase","l":"MiClase()","u":"%3Cinit%3E()"}];updateSearchResults();
+memberSearchIndex = [{"p":"MiPaquete","c":"MiClase","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"MiPaquete","c":"MiClase","l":"MiClase()","u":"%3Cinit%3E()"}];updateSearchResults();

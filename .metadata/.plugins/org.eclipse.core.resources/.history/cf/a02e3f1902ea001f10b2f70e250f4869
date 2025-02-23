@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MiAplicacion" default="all" basedir=".">
+    <!-- Cargar variables de entorno (por ejemplo, para acceder a JAVA_HOME) -->
+    <property environment="env"/>
+    
+    <!-- Definición de propiedades -->
+    <!-- Carpeta de ficheros fuente -->
+    <property name="src.dir" location="src"/>
+    <!-- Carpeta de build general -->
+    <property name="build.dir" location="build"/>
+    <!-- Carpeta para los archivos .class compilados -->
+    <property name="classes.dir" location="${build.dir}/classes"/>
+    <!-- Carpeta para el archivo JAR -->
+    <property name="jar.dir" location="${build.dir}/jar"/>
+    <!-- Nombre del archivo JAR generado -->
+    <property name="jar.name" value="MiAplicacion.jar"/>
+    <!-- Carpeta para la documentación Javadoc -->
+    <property name="doc.dir" location="${build.dir}/doc"/>
+
+    <!-- Target: limpia la carpeta de build -->
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <!-- Target: inicialización (crea carpetas necesarias) -->
+    <target name="init">
+        <mkdir dir="${classes.dir}" />
+        <mkdir dir="${jar.dir}" />
+        <mkdir dir="${doc.dir}" />
+    </target>
+
+    <!-- Target: compilar los ficheros Java -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"
+               debug="true" deprecation="true">
+            <!-- Si necesitas agregar librerías, puedes usar la etiqueta <classpath> -->
+        </javac>
+    </target>
+
+    <!-- Target: generar la documentación Javadoc -->
+    <target name="javadoc" depends="init">
+        <javadoc sourcepath="${src.dir}" destdir="${doc.dir}">
+            <!-- Puedes incluir opciones adicionales para el javadoc aquí -->
+        </javadoc>
+    </target>
+
+    <!-- Target: empaquetar los .class en un archivo JAR -->
+    <target name="jar" depends="compile">
+        <jar destfile="${jar.dir}/${jar.name}" basedir="${classes.dir}">
+            <!-- Opcional: si tienes una clase principal, puedes añadir un manifiesto
+            <manifest>
+                <attribute name="Main-Class" value="com.ejemplo.MainClass"/>
+            </manifest>
+            -->
+        </jar>
+    </target>
+
+    <!-- Target: all - ejecuta todo el proceso -->
+    <target name="all" depends="clean, compile, jar, javadoc">
+        <echo message="Construcción completada. El JAR se encuentra en: ${jar.dir}/${jar.name}" />
+        <echo message="Documentación generada en: ${doc.dir}" />
+        <echo message="JAVA_HOME (según variables de entorno): ${env.JAVA_HOME}" />
+    </target>
+</project>
