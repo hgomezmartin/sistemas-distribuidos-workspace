@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import es.ubu.lsi.common.ChatMessage;
@@ -21,6 +22,8 @@ public class ChatClientImpl implements ChatClient {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	
+	private HashMap<Integer, String> banList = new HashMap<Integer, String>();
+	
 	
 	public ChatClientImpl(String server, int port, String username) {
 		this.server = server;
@@ -35,8 +38,9 @@ public class ChatClientImpl implements ChatClient {
             	while (carryOn) {
             		Object obj = in.readObject();
             		if (obj instanceof ChatMessage) {
-            			ChatMessage incomingMsg = (ChatMessage) obj;
-            			System.out.println(incomingMsg.getId() + ": " + incomingMsg.getMessage());
+            			ChatMessage chatMsg = (ChatMessage) obj;
+            			if(!banList.containsKey(chatMsg.getId())) 
+            			System.out.println(chatMsg.getId() + ": " + chatMsg.getMessage());
             		}
             	}
             } catch (ClassNotFoundException | IOException e) {
@@ -50,9 +54,18 @@ public class ChatClientImpl implements ChatClient {
 		// TODO Auto-generated method stub
 		try {
 			socket = new Socket(server, port);
-			in = new ObjectInputStream(socket.getInputStream());
 			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
 			
+			// enviamos un mensaje de registro (por ejemplo, indicando el username)
+			ChatMessage registerMsg = new ChatMessage(0, MessageType.MESSAGE, "username " + username);
+			sendMessage(registerMsg);
+
+			// esperamso la respuesta del servidor con el ID asignado
+			ChatMessage confirmation = (ChatMessage) in.readObject();
+			this.id = confirmation.getId();
+			
+			//mantenemos la escuacha en 
 			ChatClientListener listener = new ChatClientListener();
 			Thread threadListener = new Thread(listener);;
 			threadListener.start();
@@ -61,7 +74,7 @@ public class ChatClientImpl implements ChatClient {
 			return true;
 			
 			
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			System.err.println("Error al iniciar el cliente: " + e.getMessage());
             return false;
 			
@@ -72,7 +85,6 @@ public class ChatClientImpl implements ChatClient {
 	public void sendMessage(ChatMessage msg) {
 		try {
 			out.writeObject(msg);
-			//out.flush();
 		} catch (IOException e) {
 			System.err.println("Error al enviar el mensaje: " + e.getMessage());
 		}
@@ -114,24 +126,51 @@ public class ChatClientImpl implements ChatClient {
 	    	Scanner scanner = new Scanner(System.in);
 	    	
 	    	while (cliente.carryOn) {
-	    		String input = scanner.nextLine();
+	    		String command = scanner.next().toLowerCase();
+	            String arguments = scanner.nextLine().trim();
 	    		
-	    		if ("logout".equalsIgnoreCase(input)) {
+	    		if ("logout".equalsIgnoreCase(command)) {
 	    			String msgText = cliente.username + " patrocina el mensaje: logout";
 	    			ChatMessage logoutMsg = new ChatMessage(cliente.id, MessageType.LOGOUT, msgText);
 	    			cliente.sendMessage(logoutMsg);
 	    			
 	    			cliente.carryOn=false;
 	    			
-	    		}else if("shutdown".equalsIgnoreCase(input)){
+	    		}else if("shutdown".equalsIgnoreCase(command)){
 	    			String msgText = cliente.username + " patrocina el mensaje: shutdown";
 	    			ChatMessage shutdownMsg = new ChatMessage(cliente.id, MessageType.SHUTDOWN, msgText);
 	    			cliente.sendMessage(shutdownMsg);
 	    			
 	    			cliente.carryOn=false;
 	    			
+	    		}else if("ban".equals(command)){
+	    			if(!arguments.isEmpty()) {
+	    				String userToBan = arguments;
+	    				int userToBanId = userToBan.hashCode();
+	    				cliente.banList.put(userToBanId, userToBan);
+	    				
+	    				String banMsg = cliente.username + " ha baneado a " + userToBan;
+	    				ChatMessage banMessage = new ChatMessage(cliente.id, MessageType.MESSAGE, banMsg);
+	                    cliente.sendMessage(banMessage);
+	    			}else {
+	    				System.out.println("Te falta el argumento. Ej de uso: ban <usuario>");
+	    			}
+	    			
+	    		}else if("unban".equals(command)){
+	    			if(!arguments.isEmpty()) {
+	    				String userToUnban = arguments;
+	    				int userToUnbanId = userToUnban.hashCode();
+	    				cliente.banList.put(userToUnbanId, userToUnban);
+	    				
+	    				String unbanMsg = cliente.username + " ha desbaneado a " + userToUnban;
+	    				ChatMessage unbanMessage = new ChatMessage(cliente.id, MessageType.MESSAGE, unbanMsg);
+	                    cliente.sendMessage(unbanMessage);
+	    			}else {
+	    				System.out.println("Te falta el argumento. Ej de uso: ban <usuario>");
+	    			}
+	    			
 	    		}else {
-	    			String msgText = cliente.username + " patrocina el mensaje: "+ input;
+	    			String msgText = cliente.username + " patrocina el mensaje: "+ command + " " + arguments;
 	    			ChatMessage message = new ChatMessage(cliente.id, MessageType.MESSAGE, msgText);
 	    			cliente.sendMessage(message);
 	    		}
