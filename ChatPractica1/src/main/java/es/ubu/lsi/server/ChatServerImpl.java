@@ -97,7 +97,8 @@ public class ChatServerImpl implements ChatServer{
 					}
 				}catch(IOException | ClassNotFoundException e) {
 					System.err.println("Error en la comunicación con el cliente (ID=" + id + "): " + e.getMessage());
-                    break;	
+					sigue = false; //aqui
+                    //break;	
 				}
 			}
 			

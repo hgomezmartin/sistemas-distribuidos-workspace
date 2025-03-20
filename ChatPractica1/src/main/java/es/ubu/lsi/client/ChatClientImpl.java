@@ -45,6 +45,7 @@ public class ChatClientImpl implements ChatClient {
             	}
             } catch (ClassNotFoundException | IOException e) {
             	System.err.println("Error en el hilo de escucha: " + e.getMessage());	
+            	carryOn = false;
             }
         }
     }
@@ -160,7 +161,7 @@ public class ChatClientImpl implements ChatClient {
 	    			if(!arguments.isEmpty()) {
 	    				String userToUnban = arguments;
 	    				int userToUnbanId = userToUnban.hashCode();
-	    				cliente.banList.put(userToUnbanId, userToUnban);
+	    				cliente.banList.remove(userToUnbanId, userToUnban);
 	    				
 	    				String unbanMsg = cliente.username + " ha desbaneado a " + userToUnban;
 	    				ChatMessage unbanMessage = new ChatMessage(cliente.id, MessageType.MESSAGE, unbanMsg);
