@@ -148,11 +148,17 @@ public class ChatClientImpl implements ChatClient {
 	    			if(!arguments.isEmpty()) {
 	    				String userToBan = arguments;
 	    				int userToBanId = userToBan.hashCode();
-	    				cliente.banList.put(userToBanId, userToBan);
 	    				
-	    				String banMsg = cliente.username + " ha baneado a " + userToBan;
-	    				ChatMessage banMessage = new ChatMessage(cliente.id, MessageType.MESSAGE, banMsg);
-	                    cliente.sendMessage(banMessage);
+	    				// Verificamos que el usuario no se esté baneando a sí mismo
+	    		        if (cliente.id == userToBanId) {
+	    		            System.out.println("No puedes banearte a ti mismo.");
+	    		        } else {
+	    		            cliente.banList.put(userToBanId, userToBan);
+	    		            
+	    		            String banMsg = cliente.username + " ha baneado a " + userToBan;
+	    		            ChatMessage banMessage = new ChatMessage(cliente.id, MessageType.MESSAGE, banMsg);
+	    		            cliente.sendMessage(banMessage);
+	    		        }
 	    			}else {
 	    				System.out.println("Te falta el argumento. Ej de uso: ban <usuario>");
 	    			}

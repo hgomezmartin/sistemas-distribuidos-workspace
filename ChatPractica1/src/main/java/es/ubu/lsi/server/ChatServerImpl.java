@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class ChatServerImpl implements ChatServer{
@@ -22,8 +21,6 @@ public class ChatServerImpl implements ChatServer{
 	private SimpleDateFormat sdf;
 	private int port;
 	private boolean alive;
-	
-	private AtomicInteger nextId = new AtomicInteger(1);
 	
 	private Map<Integer, ServerThreadForClient> clients;
 	
@@ -56,7 +53,7 @@ public class ChatServerImpl implements ChatServer{
 				if(content.startsWith("username ")) {
 					this.username = content.substring("username ".length());
                     // Asignamos un ID, por ejemplo usando hashCode 
-                    this.id = nextId.getAndIncrement();
+                    this.id = username.hashCode();
                     
                  // Enviar un mensaje de confirmación al cliente con su ID asignado
                     ChatMessage confirmation = new ChatMessage(
@@ -68,7 +65,7 @@ public class ChatServerImpl implements ChatServer{
                     System.out.println(sdf.format(new Date()) + " Cliente conectado: " + username + " (ID=" + id + ")");
 				}else {
 					this.username = "ClienteSinNombre";
-                    this.id = nextId.getAndIncrement();
+                    this.id = this.username.hashCode();
                     System.out.println("Cliente conectado sin username, se le asigna " + username + " (ID=" + id + ")");
 				}
 				
@@ -86,10 +83,10 @@ public class ChatServerImpl implements ChatServer{
 				try {
 					ChatMessage msg = (ChatMessage) in.readObject();
 					if(msg.getType() == MessageType.LOGOUT) {
-						System.out.println("El cliente "+ username + " (ID=" + id + ") ha realizado LOGOUT");
+						System.out.println("El cliente "+ username + "ID=" + id + ") ha realizado LOGOUT");
 						sigue = false;
 					} else if(msg.getType() == MessageType.SHUTDOWN) {
-						System.out.println("El cliente "+ username + " (ID=" + id + ") ha realizado SHUTDOWN");
+						System.out.println("El cliente "+ username + "ID=" + id + ") ha realizado SHUTDOWN");
 						sigue = false;
 						shutdown();
 					}else if(msg.getType() == MessageType.MESSAGE) {
