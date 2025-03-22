@@ -10,27 +10,63 @@ import java.util.Scanner;
 import es.ubu.lsi.common.ChatMessage;
 import es.ubu.lsi.common.ChatMessage.MessageType;
 
+/**
+ * Implementacion del cliente de chat
+ * 
+ * El cliente se conecta a un server con el puerto especificado, envia un mensaje
+ * de registro con username y luego recibe un ID. Permite enviar mensajes y soporta
+ * comandos como logout, shutdown, ban y unban
+ * 
+ * @author Hugo Gómez Martín
+ */
 public class ChatClientImpl implements ChatClient {
 	
+	/** Direccion del servidor */
 	private String server;
+	
+	/** Nombre de usuario */
 	private String username;
+	
+	/** Puerto que usa el servidor (por defecto 1500) */
 	private static int port = 1500;
+	
+	/** Flag que indica si el cliente debe seguir funcionando */
 	private boolean carryOn = true;
+	
+	/** ID asignado al cliente por el server */
 	private int id;
 	
+	
+	/** Socket para la conexion con el server */
 	private Socket socket;
+	
+	/** Flujo de entrada que recibe mensajes del server*/
 	private ObjectInputStream in;
+	
+	/** Flujo de salida para enviar mensajes al server*/
 	private ObjectOutputStream out;
 	
+	
+	/** Lista de baneos, donde se almacenan los IDs de usuarios baneados */
 	private HashMap<Integer, String> banList = new HashMap<Integer, String>();
 	
 	
+	/**
+	 * Constructor que inicializael cliente con la direccion del sevidor, el puerto y username
+	 * 
+	 * @param server
+	 * @param port
+	 * @param username
+	 */
 	public ChatClientImpl(String server, int port, String username) {
 		this.server = server;
 		this.port = port;
 		this.username = username;
 	}
 	
+	/**
+	 * Clase interna (inner) que se encarga de escuchar mensajes del server, implementa Runnable
+	 */
 	public class ChatClientListener implements Runnable {
         @Override
         public void run() {
@@ -39,6 +75,7 @@ public class ChatClientImpl implements ChatClient {
             		Object obj = in.readObject();
             		if (obj instanceof ChatMessage) {
             			ChatMessage chatMsg = (ChatMessage) obj;
+            			// Si el usuario no esta baneado, se muestra el mensaje
             			if(!banList.containsKey(chatMsg.getId())) 
             			System.out.println(chatMsg.getId() + ": " + chatMsg.getMessage());
             		}
@@ -49,10 +86,15 @@ public class ChatClientImpl implements ChatClient {
             }
         }
     }
-
+	
+	/**
+	 * Como su nombre indica, Inicializa la conexion al server, envia el mensaje de registro
+	 * y arranca el hilo de escucha
+	 * 
+	 * @return true (si la conexion se establece correctamente, false al contrario)
+	 */
 	@Override
 	public boolean start() {
-		// TODO Auto-generated method stub
 		try {
 			socket = new Socket(server, port);
 			out = new ObjectOutputStream(socket.getOutputStream());
@@ -82,6 +124,11 @@ public class ChatClientImpl implements ChatClient {
 		}
 	}
 
+	/**
+	 * Envía un mensaje al server
+	 * 
+	 * @param msg (ensaje a enviar)
+	 */
 	@Override
 	public void sendMessage(ChatMessage msg) {
 		try {
@@ -92,6 +139,9 @@ public class ChatClientImpl implements ChatClient {
 		
 	}
 
+	/**
+	 * Cierra el socket y sus flujos in y out, finalizando así la conexion con el server
+	 */
 	@Override
 	public void disconnect() {
 		try {
@@ -107,6 +157,11 @@ public class ChatClientImpl implements ChatClient {
 		
 	}
 	
+	/**
+	 * Método principal que inicia el cliente y procesa los comandos de entrada
+	 * 
+	 * @param args (Argumentos de linea de comandos, que basicamente son ~> server port username)
+	 */
 	public static void main(String[] args) {
 		
 		if (args.length < 3) {
@@ -186,7 +241,6 @@ public class ChatClientImpl implements ChatClient {
 
 	        // Finalmente, desconectamos
 	        cliente.disconnect();
-	    }
+		}
 	}
-
 }
