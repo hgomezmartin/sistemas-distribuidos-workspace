@@ -1,10 +1,10 @@
-package com.sistdistr.practica2;
+package com.example.books.books;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Practica2ApplicationTests {
+class BooksApplicationTests {
 
 	@Test
 	void contextLoads() {
