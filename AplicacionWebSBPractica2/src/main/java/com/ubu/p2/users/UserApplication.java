@@ -1,13 +1,13 @@
-package com.example.books.books;
+package com.ubu.p2.users;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BooksApplication {
+public class UserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BooksApplication.class, args);
+		SpringApplication.run(UserApplication.class, args);
 	}
 
 }
