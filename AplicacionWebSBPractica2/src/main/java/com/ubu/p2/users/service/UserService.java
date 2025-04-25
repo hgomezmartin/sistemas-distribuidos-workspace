@@ -15,21 +15,18 @@ public class UserService {
     private UserRepository userRepository;
 
     /**
-     * Comprueba si existe un user con 'username' y password coincidente.
+     * comprueba si existe un user con username y password coincidente.
      */
     public boolean checkRegistered(String username, String password) {
-        Optional<User> userOpt = userRepository.findByUsername(username);
-        if (userOpt.isPresent()) {
-            return userOpt.get().getPassword().equals(password);
-        }
-        return false;
+        User user = userRepository.findByUsername(username);
+        return user != null && user.getPassword().equals(password);
     }
 
     /**
      * Retorna el usuario que tenga ese username, o null si no existe.
      */
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+        return userRepository.findByUsername(username);   // ya puede devolver null
     }
 
     /**

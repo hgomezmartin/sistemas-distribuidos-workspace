@@ -1,4 +1,3 @@
-<!--  src/main/resources/templates/login.html  -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -20,7 +19,8 @@
 </form>
 
 <!-- Si el controlador puso un atributo 'error', lo mostramos -->
-<p th:if="${error}" th:text="${error}"></p>
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
 
+<a href="/">Volver</a>
 </body>
 </html>

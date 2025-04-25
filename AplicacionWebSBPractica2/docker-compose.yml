@@ -11,5 +11,35 @@ services:
     volumes:
       - db:/var/lib/mysql
       - ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
+
+
+  spring-app:
+    build:
+      context: .  # raiz del proyecto
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - mysqldb
+    environment:
+      # mismas credenciales
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/${MYSQLDB_DATABASE}?useSSL=false"
+      SPRING_DATASOURCE_USERNAME: "${MYSQLDB_USER}"
+      SPRING_DATASOURCE_PASSWORD: "${MYSQLDB_ROOT_PASSWORD}"
+    ports:
+      - "8080:8080"
+
+
+  python-api:
+    build:
+      context: ./api-flask
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api-flask/files:/app/files
+    depends_on:
+      - mysqldb
+
 volumes:
   db:

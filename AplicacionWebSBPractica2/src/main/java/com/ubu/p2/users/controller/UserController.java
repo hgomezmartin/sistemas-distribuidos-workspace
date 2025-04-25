@@ -64,7 +64,7 @@ public class UserController {
     public String getProfile(Model model, HttpSession session) {
         Object sessionUserId = session.getAttribute("userId");
         if (sessionUserId == null) {
-            // Si no hay user en sesión, redirige a login
+            //si no hay user en sesión redirige a login
             return "redirect:/login";
         }
 
@@ -80,7 +80,7 @@ public class UserController {
                                 @RequestParam("password") String password,
                                 @RequestParam("email") String email,
                                 Model model) {
-        // Llamamos a un metodo del service que haga el update.
+        // llamamos a un metodo del service que haga el update
         userService.updateProfile(id, username, password, email);
 
         // volvemos a cargar los datos para mostrarlos

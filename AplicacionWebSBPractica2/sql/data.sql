@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS books; --por el ejmplo
+DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users (
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     );
 
 INSERT INTO users(username, password, email) VALUES
-    ('Peter','Peter123456', 'peter@ubu.es' ),
-    ('Celio','Celio123456','celio23@alu.ubu.es'),
-    ('Fernando', 'FernandoTorres2009','Torresprime2009@ubu.es'),
-    ('Rodolfo', 'RodolfoEurovision123456','chiquilicuatre@ubu.es');
+    ('Peter','pass123', 'peter@ubu.es' ),
+    ('Celio','celio123','celio23@alu.ubu.es'),
+    ('Fernando', 'torres2009','Torresprime2009@ubu.es'),
+    ('Rodolfo', 'rodolfo123','chiquilicuatre@ubu.es');

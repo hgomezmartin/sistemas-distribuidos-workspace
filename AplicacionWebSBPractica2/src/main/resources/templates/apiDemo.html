@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Simular API</title>
+</head>
+<body>
+<h1>Laboratorio de llamadas a la API Python</h1>
+
+<form th:action="@{/api-demo/call}" method="post">
+    <!-- El usuario escribe la ruta que quiera probar -->
+    <input type="text" name="endpoint" size="40"
+           placeholder="/api/db/users o /ping o /api/file/file1.txt">
+    <button>Lanzar petición</button>
+</form>
+
+<hr>
+
+<!-- Resultado OK -->
+<pre th:if="${result}" th:text="${result}"></pre>
+
+<!-- Mensaje de error -->
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+<a href="/">Volver a Home</a>
+</body>
+</html>
