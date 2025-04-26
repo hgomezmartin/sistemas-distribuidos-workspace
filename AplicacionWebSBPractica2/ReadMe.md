@@ -1,72 +1,61 @@
-# Bookstore Web Application
+# Práctica 2 – Sistemas Distribuidos: Spring Boot + Flask + MySQ(Docker-Compose)
 
-This is a simple web application for managing a bookstore. It demonstrates the use of JSP, Servlet, and JDBC with Datasource for CRUD operations with a MySQL database.
+## Como poder ejecutar la práctica
 
-## Features
+### Primero clona el repositorio en el directorio que más desee
+git clone https://github.com/hgomezmartin/sistemas-distribuidos-workspace.git
 
-- Display a list of books from the database.
-- Add new books to the database.
-- Update existing books.
-- Delete books from the database.
+### Crea el Jar del Springboot
+`./mvnw clean package -DskipTests`
 
-## Technologies Used
+### construye las imágenes Docker
+`docker compose build`
 
-- Java Servlets
-- JavaServer Pages (JSP)
-- JDBC (Java Database Connectivity)
-- DBCP2 BasicDataSource
-- MySQL
-- Apache Tomcat (Servlet container)
-- Maven (Build tool)
+### levanta las imagenes de Docker (MySql + Spring Boot + Flask)
+#### Con log:
+`docker compose up`
+#### Sin log:
+``docker compose up -d`
 
-## Project Structure
+### Puedes comprovar el estado con (Opcional):
+`docker compose ps`
+`docker compose logs -f` 
 
-- **src/main/java/org/example**: Contains Java source files.
-    - `Book.java`: Entity class representing a book.
-    - `BookServlet.java`: Servlet for handling HTTP requests.
-	- `MyDataSourceFactory `: Factory class for creating DataSource.
-- **src/main/webapp**: Contains JSP files.
-    - `index.jsp`: JSP page to display the list of books and manage CRUD operations.
-- **src/main/webapp/css**: Contains CSS file.
-  - `style.css` : Simple CSS Stylesheet
+## URLs principales
 
-## Database Configuration
+### Home + login:
+`http://localhost:8080/`
 
-- Create a MySQL database named `booksdb`.
-- Execute the provided SQL script (`booksdb.sql`) to create the `books` table and insert sample data.
+### Pantalla para lanzar manualmente cualquier endpoint de Flask
+`http://localhost:8080/api-demo`
 
-### Database Creation Script
+## Credenciales usadas en la DB:
+### Usuario | Contraseña:
+- Peter    | pass123
+- Celio    | celio123
+- Fernando | torres2009
+- Rodolfo  | rodolfo123
 
-```sql
--- Create the database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS booksdb;
+## Endpoints de la api flask:
+### Ruta | Tipo de prueba
+- `/ping`                      | Comunicación
+- `/api/file/file1.txt`        | Ok fichero
+- `/api/file/noexite.txt`      | FileNotFound
+- `/api/file/confidential.txt` | PermissionError (simulado)
+- `/api/db/users`              | Ok BD
+- `/api/db/force-error`        | Error SQL
+- `/api/pokemon/pikachu`       | API externa ok
+- `/api/pokemon/iniesta`       | API externa error 404
+- `/api/timeout`               | Provoca timeor (RestTemplate corta a 5s)
 
--- Switch to the booksdb database
-USE booksdb;
+NOTA: No obstante, si tienes alguna duda, en la carpeta api-frontend-capturas hay capturas para ver como se pueden usar estos endpoits en el frontend. No obtante, tambien puedes probarlo con Postman, donde en la carpeta del proyecto llamada Postman puedes comprobar como se realizan y que devuelven.
 
--- Create the books table
-CREATE TABLE IF NOT EXISTS books (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    author VARCHAR(255) NOT NULL
-);
+## Parar y limpiar e proyecto
+### Detiene contenedores: 
+`docker compose down`
+### Detiene contenedores + borra volumen
+`docker compose down -v`
 
--- Insert sample data into the books table
-INSERT INTO books (title, author) VALUES
-('To Kill a Mockingbird', 'Harper Lee'),
-('1984', 'George Orwell'),
-('The Great Gatsby', 'F. Scott Fitzgerald'),
-('Pride and Prejudice', 'Jane Austen'),
-('The Catcher in the Rye', 'J.D. Salinger');
-```
-## Deployment
-- Build the project using Maven: `mvn clean install`.
-- Deploy the generated WAR file (bookstore-jsp-servlet-jdbc-1.0.war) to a Servlet container like Apache Tomcat.
 
-## Usage
-- Access the application at `http://localhost:8080/bookstore-jsp-servlet-jdbc-datasource-1.0/books`.
-- You'll see a list of books from the database.
-- You can add, update, or delete books using the provided UI.
+Hugo Gómez Martín - 2025
 
-## License
-This project is licensed under the MIT License
