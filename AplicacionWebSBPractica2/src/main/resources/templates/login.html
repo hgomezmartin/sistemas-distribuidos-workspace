@@ -7,7 +7,7 @@
 
 <h1>Login</h1>
 
-<!-- Formulario que envía username y password a /checkLogin -->
+<!-- formulario que envia username y password a /checkLogin -->
 <form th:action="@{/checkLogin}" method="post">
     <label>Usuario:</label>
     <input type="text" name="username" />
@@ -18,7 +18,7 @@
     <button type="submit">Entrar</button>
 </form>
 
-<!-- Si el controlador puso un atributo 'error', lo mostramos -->
+<!-- Si el controlador puso un atributo 'error' lo mostramos -->
 <p th:if="${error}" th:text="${error}" style="color:red"></p>
 
 <a href="/">Volver</a>

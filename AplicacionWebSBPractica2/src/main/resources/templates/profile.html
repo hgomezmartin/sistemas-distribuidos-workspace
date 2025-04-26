@@ -7,12 +7,12 @@
 
 <h1>Perfil de usuario</h1>
 
-<!-- Mostramos la info del usuario (attributo user) -->
+<!-- mostramos la info del usuario (attributo user) -->
 <p>ID: <span th:text="${user.id}"></span></p>
 <p>Username: <span th:text="${user.username}"></span></p>
 <p>Email: <span th:text="${user.email}"></span></p>
 
-<!-- Form para actualizar los datos -->
+<!-- form para actualizar los datos -->
 <h3>Actualizar perfil</h3>
 <form th:action="@{/updateProfile}" method="post">
     <!-- id oculto -->

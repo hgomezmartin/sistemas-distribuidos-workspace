@@ -24,7 +24,7 @@ public class UserController {
         if (session.getAttribute("userId") != null) {
             model.addAttribute("logued", true);
         }
-        return "home";  // Plantilla Thymeleaf (home.html)
+        return "home";  //plantilla Thymeleaf (home.html)
     }
 
     @GetMapping("/login")
@@ -95,6 +95,13 @@ public class UserController {
         List<User> userList = userService.getAllUsers();
         model.addAttribute("userList", userList);
         return "showUsers";  // showUsers.html
+    }
+
+    /** Cierra la sesión y muestra la pantalla logout */
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();          // elimina todos los atributos de sesión
+        return "logout";               // logout.html
     }
 
 }

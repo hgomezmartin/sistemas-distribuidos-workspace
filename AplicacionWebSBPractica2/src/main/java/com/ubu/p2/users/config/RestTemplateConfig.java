@@ -7,8 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Declara un RestTemplate con time-out
- * para hacer llamadas a la API Python.
+ * declaramos un RestTemplate con time-out de 5sec para hacer llamadas a la API Python.
  */
 @Configuration
 public class RestTemplateConfig {

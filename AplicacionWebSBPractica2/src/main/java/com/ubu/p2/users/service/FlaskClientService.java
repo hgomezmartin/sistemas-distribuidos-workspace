@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Hace GET y devuelve el JSON (o lanza una excepción si falla).
+ * hace un GET y devuelve el JSON (o lanza una excepción si falla).
  */
 @Service
 public class FlaskClientService {

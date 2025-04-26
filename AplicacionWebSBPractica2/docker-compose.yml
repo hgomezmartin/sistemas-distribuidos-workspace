@@ -34,6 +34,11 @@ services:
       context: ./api-flask
       dockerfile: Dockerfile
     restart: unless-stopped
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: "123456"
+      MYSQL_DATABASE: libreria
     ports:
       - "5000:5000"
     volumes:

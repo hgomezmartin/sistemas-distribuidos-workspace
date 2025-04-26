@@ -15,7 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
     /**
-     * comprueba si existe un user con username y password coincidente.
+     * comprueba si existe un user con username y password que coincidan
      */
     public boolean checkRegistered(String username, String password) {
         User user = userRepository.findByUsername(username);
@@ -23,21 +23,21 @@ public class UserService {
     }
 
     /**
-     * Retorna el usuario que tenga ese username, o null si no existe.
+     * retorna el usuario que tenga ese username o null si no existe
      */
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);   // ya puede devolver null
     }
 
     /**
-     * Retorna el usuario con el id dado, o null si no existe.
+     * retorna el usuario con el id dado o null si no existe
      */
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
     /**
-     * Actualiza el perfil de un usuario (username, pass, email) según el id.
+     * actualiza el perfil de un usuario (username, contraseña o email) segun el id
      */
     public void updateProfile(Long id, String username, String password, String email) {
         User user = getUserById(id);
@@ -50,7 +50,7 @@ public class UserService {
     }
 
     /**
-     * Retorna todos los usuarios de la BD.
+     * retorna todos los usuarios de la BD.
      */
     public List<User> getAllUsers() {
         return userRepository.findAll();
