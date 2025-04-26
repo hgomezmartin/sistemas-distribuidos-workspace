@@ -1,9 +1,7 @@
 import os, time, mysql.connector, requests
 from flask import Flask, jsonify, abort
-from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)    #permite peticiones desde el front
 
 # ---------- util db ----------
 def get_db_conn():
@@ -26,15 +24,15 @@ FORBIDDEN = {"confidential.txt"} #ficheros que establecemos como secretos
 @app.get("/api/file/<path:filename>")
 def read_file(filename):
     if filename in FORBIDDEN:
-        abort(403, f"Permiso denegado para {filename}")
+        abort(403, f"Permiso denegado para {filename}") #no hay permiso, 403
     try:
         with open(f"./files/{filename}") as f:
             return jsonify({"file": filename, "content": f.read()})
     except FileNotFoundError:
-        abort(404, f"El archivo {filename} no existe")
+        abort(404, f"El archivo {filename} no existe") #no existe, 404
 
 # ---------- 2) BD: lista users ----------
-@app.get("/api/db/users")
+@app.get("/api/db/users") #recupera todos los users de la tabla users, si ocurre un error lanzamos 500
 def list_users():
     conn = None #declaramos antes del try q si no nos da error de no declaracion
     try:

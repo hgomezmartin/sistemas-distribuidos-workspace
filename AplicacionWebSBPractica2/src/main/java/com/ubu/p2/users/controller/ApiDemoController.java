@@ -21,7 +21,7 @@ public class ApiDemoController {
         return "apiDemo";     // templates/apiDemo.html
     }
 
-    //recibe lo que el usuario quiere invocar
+    //recibe lo que el usuario quiere invocar y lo procesa
     @PostMapping("/call")
     public String call(@RequestParam String endpoint, Model model) {
         try {

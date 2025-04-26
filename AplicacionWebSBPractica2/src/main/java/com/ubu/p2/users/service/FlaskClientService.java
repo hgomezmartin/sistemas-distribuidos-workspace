@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class FlaskClientService {
 
+    //baseUrl se coge de application.properties o si no existe toma el valor por defecto python-api:5000 (Docker)
     @Value("${flask.base-url:http://python-api:5000}") // python-api:5000 / localhost:5000
     private String baseUrl;
 
@@ -20,8 +21,8 @@ public class FlaskClientService {
     }
 
     public Object get(String path) {
-        // path llegará como "/api/db/users", etc.
-        // RestTemplate convierte JSON en Map/List automágicamente.
+        // path llegará como "/api/db/users" ...
+        // RestTemplate convierte JSON en Map/List automáticamente
         return rest.getForObject(baseUrl + path, Object.class);
     }
 }
