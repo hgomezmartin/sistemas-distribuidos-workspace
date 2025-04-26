@@ -15,7 +15,7 @@ git clone https://github.com/hgomezmartin/sistemas-distribuidos-workspace.git
 #### Con log:
 `docker compose up`
 #### Sin log:
-``docker compose up -d`
+`docker compose up -d`
 
 ### Puedes comprovar el estado con (Opcional):
 `docker compose ps`
