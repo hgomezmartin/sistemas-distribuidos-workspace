@@ -1,9 +1,7 @@
 # Práctica 2 – Sistemas Distribuidos: Spring Boot + Flask + MySQ(Docker-Compose)
-
 ## Como poder ejecutar la práctica
-
 ### Primero clona el repositorio en el directorio que más desee
-git clone https://github.com/hgomezmartin/sistemas-distribuidos-workspace.git
+`git clone https://github.com/hgomezmartin/sistemas-distribuidos-workspace.git`
 
 ### Crea el Jar del Springboot
 `./mvnw clean package -DskipTests`
@@ -15,14 +13,13 @@ git clone https://github.com/hgomezmartin/sistemas-distribuidos-workspace.git
 #### Con log:
 `docker compose up`
 #### Sin log:
-``docker compose up -d`
+`docker compose up -d`
 
 ### Puedes comprovar el estado con (Opcional):
 `docker compose ps`
 `docker compose logs -f` 
 
 ## URLs principales
-
 ### Home + login:
 `http://localhost:8080/`
 
