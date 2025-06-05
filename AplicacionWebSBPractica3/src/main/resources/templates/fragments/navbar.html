@@ -21,6 +21,14 @@
                 <li><a class="nav-link" th:href="@{/merch}">Tienda</a></li>
                 <li><a class="nav-link" th:href="@{/tickets}">Tickets</a></li>
 
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/cart}">Carrito
+                        <span th:if="${cartCount > 0}">
+                            (<span th:text="${cartCount}">0</span>)
+                        </span>
+                    </a>
+                </li>
+
                 <!-- Si NO está autenticado, muestro Entrar / Registro -->
                 <li sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/login}">Entrar</a>

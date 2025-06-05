@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class TicketController {
 
-    @Autowired
+
     private final TicketService srv;
     private final CartService cart;
 
     @GetMapping
     public String list(Model model){
         model.addAttribute("tickets", srv.list());
-        return "tickets/list";
+        return "tickets";
     }
 
     //CRUD admin

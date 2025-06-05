@@ -26,7 +26,7 @@ public class ProductController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("products", srv.list());
-        return "merchandise/list";
+        return "merchandise";
     }
 
     // crear / editar (solo admin)
