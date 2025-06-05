@@ -23,9 +23,12 @@
             <td th:text="${u.email}">mail</td>
             <td th:text="${u.role}">ROLE_USER</td>
             <td>
-                <!--<form th:action="@{/users/toggle/{id}(id=${u.id})}" method="post">-->
-                <form th:action="@{/admin/users/{id}/toggle(id=${u.id})}" method="post">
-                    <button class="btn btn-warning btn-sm">Cambiar rol</button>
+                <form th:action="@{|/users/${u.id}/role|}" method="post" class="d-inline-flex">
+                    <select name="role" class="form-select form-select-sm me-1">
+                        <option value="ROLE_USER"  th:selected="${u.role=='ROLE_USER'}">USER</option>
+                        <option value="ROLE_ADMIN" th:selected="${u.role=='ROLE_ADMIN'}">ADMIN</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary">Actualizar</button>
                 </form>
             </td>
         </tr>

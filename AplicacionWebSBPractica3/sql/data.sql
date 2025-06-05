@@ -26,11 +26,17 @@ CREATE TABLE IF NOT EXISTS product (
 
 INSERT INTO product(name, description, price, image_url) VALUES
     ('Sudadera Bandito', 'Official Hoodie', 55.99, '/images/bandito.png'),
-    ('Sudadera TOP',     'Official Hoodie logo',   50.99, '/images/TOP.png'),
-    ('Sudadera Trench',     'Official Hoodie tench',   59.99, '/images/trench.png'),
-    ('Burryface CD',     'Official Burryface CD',   10.99, '/images/blurrycd.jpg'),
-    ('Trench CD',     'Official Trench CD',   12.99, '/images/trenchcd.jpg'),
-    ('Scaled And Icy CD',     'Official SAI CD',   12.99, '/images/saicd.webp');
+    ('Sudadera TOP', 'Official Hoodie logo', 50.99, '/images/TOP.png'),
+    ('Sudadera Trench', 'Official Hoodie tench', 59.99, '/images/trench.png'),
+    ('Camiseta Blurryface X aniversario','Official Shirt BX ',39.99, '/images/BXTShirtFace.webp'),
+    ('Gorra Blurryface X aniversario','Official Hat BX ',19.99, '/images/gorra.webp'),
+    ('Llavero Blurryface X aniversario','Official Keychain BX ',15.99, '/images/llavero.webp'),
+    ('Burryface CD', 'Official Burryface CD', 10.99, '/images/blurrycd.webp'),
+    ('Trench CD', 'Official Trench CD', 12.99, '/images/trenchcd.webp'),
+    ('Scaled And Icy CD', 'Official SAI CD', 12.99, '/images/saicd.webp'),
+    ('Clancy CD ', 'Official Clancy CD', 12.99, '/images/clancycd.webp'),
+    ('Clancy CD Edicion Limitada', 'Official Clancy LE CD', 17.99, '/images/clancylecd.webp');
+
 
 
 
@@ -50,7 +56,7 @@ INSERT INTO ticket(city, date, price) VALUES
     ('Barcelona - Palau Sant Jordi', '2025-10-02',  49.00),
     ('Munich - Olympiahalle', '2025-10-05',  49.00),
     ('Milan - Forum di Milano', '2025-10-07',  49.00),
-    ('Amsterdam - Palau Sant Jordi', '2025-10-10',  49.00),
+    ('Amsterdam - Ziggo Dome', '2025-10-10',  49.00),
     ('Koln - Lanxess Arena', '2025-10-12',  49.00),
     ('Paris - Accor Arena', '2025-10-13',  49.00),
     ('Prague - O2 Arena', '2025-10-16',  49.00),

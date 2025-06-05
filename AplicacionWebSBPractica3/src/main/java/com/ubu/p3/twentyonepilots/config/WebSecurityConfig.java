@@ -44,12 +44,16 @@ public class WebSecurityConfig {
 
         http.authenticationProvider(authProvider)           // lo añadimos
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/", "/login", "/register",
-                                "/css/**", "/js/**", "/images/**")
-                        .permitAll()
-                        .requestMatchers("/merch/**", "/tickets/**", "/profile/**").authenticated()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        .requestMatchers("/", "/login", "/register", "/merch/**", "/tickets/**", "/css/**", "/images/**").permitAll()
+
+                        // xonas solo para usuarios logueados
+                        .requestMatchers("/profile/**", "/cart/**").authenticated()
+
+                        // zona de administracion
+                        .requestMatchers("/users/**").hasRole("ADMIN")
+
+                        // cualquier otra cosa va a requerir iniciar sesion
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -60,7 +64,7 @@ public class WebSecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/logout-success")   // NUEVO
+                        .logoutSuccessUrl("/logout-success")
                         .invalidateHttpSession(true)
                         .permitAll()
                 );

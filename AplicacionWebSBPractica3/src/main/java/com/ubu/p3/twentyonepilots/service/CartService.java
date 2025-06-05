@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -57,6 +58,14 @@ public class CartService {
                     return price.multiply(BigDecimal.valueOf(it.getQuantity()));
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public void remove(int idx) {
+        if (idx < 0 || idx >= items.size()) return;
+
+        // LinkedHashMap preserva el orden de inserción
+        String key = new ArrayList<>(items.keySet()).get(idx);
+        items.remove(key);
     }
 
     // limpieza

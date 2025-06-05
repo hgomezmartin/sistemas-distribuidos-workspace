@@ -61,20 +61,26 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public void toggleRole(Long id) {
+    public void updateRole(Long id, String newRole) {
+        if(!newRole.equals("ROLE_USER") && !newRole.equals("ROLE_ADMIN"))
+            throw new IllegalArgumentException("Rol no válido");
         User u = get(id);
-        u.setRole(u.getRole().equals("ROLE_USER") ? "ROLE_ADMIN" : "ROLE_USER");
+        u.setRole(newRole);
         repo.save(u);
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User u = repo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        return repo.findByUsername(username)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("Usuario " + username + " no encontrado"));
+        // el builder quita automáticamente el prefijo "ROLE_"
+        return org.springframework.security.core.userdetails.User
+                .withUsername(u.getUsername())
+                .password(u.getPassword())
+                .roles(u.getRole().replace("ROLE_", ""))   // ← “ADMIN” o “USER”
+                .build();
     }
 }
 

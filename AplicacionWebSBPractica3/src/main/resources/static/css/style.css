@@ -1,9 +1,19 @@
-/* COLORES BÁSICOS */
+/* COLORES BÁSICOS E IMAGEN DE FONDO */
 body {
-    background-color: #231f20; /* negro */
-    color: #d5d0c3;            /* texto en blanco */
+    background-image: url("../images/ClancyLetterBackground.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    background-color: rgba(0, 0, 0, 0.6);
+
+    background-blend-mode: darken;
+
+    color: #d5d0c3;
     font-family: Arial, sans-serif;
 }
+
 
 /* ENLACES */
 a {

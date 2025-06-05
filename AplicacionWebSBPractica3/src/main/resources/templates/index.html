@@ -11,8 +11,10 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <section class="container text-center py-5">
-    <h1 class="display-5 text-uppercase">Bienvenido a la tienda oficial</h1>
-    <p class="lead">Tickets, merchandising exclusivo y más.</p>
+    <h1 class="display-5 text-uppercase">Bienvenido a la tienda de Twenty One Pilots</h1>
+    <p class="lead">Tickets para conciertos, merchandising exclusivo y más.</p>
+
+    <img th:src="@{/images/CLANCY.png}" alt="Clancy Logo" class="d-block mx-auto" style="max-width: 300px;"/>
 
     <a class="btn btn-tp m-2" th:href="@{/tickets}">Comprar tickets</a>
     <a class="btn btn-secondary m-2" th:href="@{/merch}">Ver merchandising</a>

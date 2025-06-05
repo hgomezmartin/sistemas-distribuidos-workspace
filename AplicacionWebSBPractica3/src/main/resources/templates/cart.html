@@ -20,12 +20,12 @@
         </thead>
 
         <tbody>
-        <tr th:each="it : ${items}">
+        <tr th:each="it, st : ${items}">
             <td th:text="${it.name}">Producto</td>
             <td th:text="${it.quantity}">1</td>
             <td th:text="${#numbers.formatDecimal(it.subtotal,1,'COMMA',2,'POINT')} + ' €'">0 €</td>
             <td>
-                <form th:action="@{/cart/remove/{id}(id=${it.id})}" method="post">
+                <form th:action="@{|/cart/remove/${st.index}|}" method="post">
                     <button class="btn btn-sm btn-danger">Quitar</button>
                 </form>
             </td>
