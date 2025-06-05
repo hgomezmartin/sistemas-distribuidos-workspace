@@ -20,17 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class TicketController {
 
-
+    /***
+     * otro crud pero en vez de merchandise entradas de concierto
+     */
     private final TicketService srv;
     private final CartService cart;
 
     @GetMapping
-    public String list(Model model){
+    public String list(Model model){ //muestra el listado publico de tickets
         model.addAttribute("tickets", srv.list());
         return "tickets";
     }
 
-    //CRUD admin
+    //CRUD admin no implementado por falta de tiempo para desarrollar las vistas, como ha pasado con product controller
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/new")
     public String newForm(Model m){ m.addAttribute("ticket", new Ticket());
@@ -38,14 +40,14 @@ public class TicketController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/{id}/edit")
+    @GetMapping("/{id}/edit") //editar el concierto
     public String edit(@PathVariable Long id, Model m){
         m.addAttribute("ticket", srv.get(id));
         return "tickets/form";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/save")
+    @PostMapping("/save") //guardarlo
     public String save(@Valid Ticket t, BindingResult br){ //implementacion del valid
         if(br.hasErrors()) return "tickets/form";
         srv.save(t);
@@ -53,13 +55,13 @@ public class TicketController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/{id}/delete")
+    @PostMapping("/{id}/delete") //eliminar concierto
     public String delete(@PathVariable Long id){
         srv.delete(id);
         return "redirect:/tickets";
     }
 
-    //añadir al carrito
+    //añadir al carrito el ticket del concierto
     @PostMapping("/{id}/add")
     public String addToCart(@PathVariable Long id){
         cart.addTicket(srv.get(id));

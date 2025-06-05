@@ -15,16 +15,16 @@ public class AuthController {
 
     private final UserService userService;
 
-    //login
+
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm() { //login
         return "login"; // templates/login.html
     }
 
-    //registro
+
     @GetMapping("/register")
-    public String registerForm(Model model) {
-        model.addAttribute("user", new User());
+    public String registerForm(Model model) {  //registro
+        model.addAttribute("user", new User()); //objeto vacio para el form
         return "register"; // templates/register.html
     }
 
@@ -33,12 +33,12 @@ public class AuthController {
                            @RequestParam String password,
                            @RequestParam String email) {
 
-        userService.register(username, password, email); // siempre ROLE_USER
-        return "redirect:/login?registered";
+        userService.register(username, password, email);
+        return "redirect:/login?registered"; //muestra alert
     }
 
     @GetMapping("/logout-success")
-    public String logoutPage() {
+    public String logoutPage() { //logout ok
         return "logout"; // templates/logout.html
     }
 }

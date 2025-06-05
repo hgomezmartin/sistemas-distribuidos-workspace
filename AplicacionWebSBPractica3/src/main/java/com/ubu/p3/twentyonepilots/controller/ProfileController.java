@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+/**
+ * para ver y editar el perfil
+ */
 @Controller
 @RequiredArgsConstructor
 public class ProfileController {
@@ -19,7 +21,7 @@ public class ProfileController {
     private final PasswordEncoder encoder;
 
     @GetMapping("/profile")
-    public String viewProfile(Authentication auth, Model model) {
+    public String viewProfile(Authentication auth, Model model) { //ver su perfil
         String username = auth.getName();
         User u = repo.findByUsername(username).orElseThrow(); //añadido calu
         model.addAttribute("user", u);
@@ -27,7 +29,7 @@ public class ProfileController {
     }
 
     @PostMapping("/profile")
-    public String updateProfile(Authentication auth,
+    public String updateProfile(Authentication auth, //editar su perfil, no implementado x falta de tiempo
                                 @RequestParam String email,
                                 @RequestParam String password) {
 

@@ -7,6 +7,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Pedido realizado por un usuario, el usuario hace 1 N pedidos ycada pedido contiene N líneas de tipo OrderItem
+ */
+
 @Entity
 @Getter
 @Setter
@@ -15,11 +20,11 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; //id incrementa
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now(); //fecha de compra
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false) //un pedido pertenece a un solo usuarop
     private User user;// quién hizo el pedido
 
     @OneToMany(mappedBy = "order",

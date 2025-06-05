@@ -12,6 +12,12 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * carrito de compra almacenado en la sesión
+ *    P:5 -> producto con id 5
+ *    T:8 -> ticket con id 8
+ */
+
 @Component
 @SessionScope          // carrito por sesión de usuario
 public class CartService {
@@ -19,7 +25,7 @@ public class CartService {
     /** key = "P:ID"  o  "T:ID" */
     private final Map<String, OrderItem> items = new LinkedHashMap<>();
 
-    //añadir
+    //añadir producto
     public void addProduct(Product p) {
         String k = "P:" + p.getId();
         items.compute(k, (key, it) -> {
@@ -33,6 +39,7 @@ public class CartService {
         });
     }
 
+    //añadir ticket
     public void addTicket(Ticket t) {
         String k = "T:" + t.getId();
         items.compute(k, (key, it) -> {
@@ -49,6 +56,7 @@ public class CartService {
     //getters
     public Collection<OrderItem> list() { return items.values(); }
 
+    //total del carrito (precio  * cantidad de cada item)
     public BigDecimal total() {
         return items.values().stream()
                 .map(it -> {
@@ -60,6 +68,7 @@ public class CartService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    //quitar linea por indice
     public void remove(int idx) {
         if (idx < 0 || idx >= items.size()) return;
 

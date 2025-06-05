@@ -6,6 +6,10 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * 3ntrada para uno de los conciertos
+ */
+
 @Entity
 @Getter
 @Setter

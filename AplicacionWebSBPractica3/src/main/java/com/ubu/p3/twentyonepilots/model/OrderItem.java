@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+/**
+ * linea individual de un pedido q puede ser un proucto del merchandise o un tickett pero nunca ambos a la vez
+ */
+
 @Entity
 @Getter
 @Setter
@@ -14,15 +18,16 @@ public class OrderItem {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer quantity = 1;
+    private Integer quantity = 1; //unidades compradas
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "order_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;     // uno u otro es null
+    @ManyToOne(fetch = FetchType.LAZY) //producto
+    private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) //entrada
     private Ticket ticket;
 
     //MÉTODOS CALCULADOS

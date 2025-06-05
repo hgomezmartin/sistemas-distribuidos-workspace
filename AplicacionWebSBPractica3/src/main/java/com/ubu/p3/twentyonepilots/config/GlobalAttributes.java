@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @RequiredArgsConstructor
 public class GlobalAttributes {
 
-    private final CartService cart;
+    private final CartService cart; //traemos carrito
 
+    //devolvemos el num de items en el carrtio
     @ModelAttribute("cartCount")
     public int cartCount() {
         return cart.list().size();

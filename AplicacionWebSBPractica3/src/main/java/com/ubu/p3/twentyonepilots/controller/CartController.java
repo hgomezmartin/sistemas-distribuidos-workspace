@@ -23,7 +23,7 @@ public class CartController {
     private final UserRepository userRepo;
 
     @GetMapping
-    public String view(Model m){
+    public String view(Model m){ //muestra el contenido del carrito
         m.addAttribute("items", cart.list());
         m.addAttribute("total", cart.total());
         return "cart";
@@ -35,20 +35,20 @@ public class CartController {
         if(cart.list().isEmpty()) return "redirect:/cart";
 
         String username = auth.getName();
-        User u = userRepo.findByUsername(username).orElseThrow(); //añadido
+        User u = userRepo.findByUsername(username).orElseThrow(); //obntenemos el usuario autenticado
 
-        Order o = new Order();
+        Order o = new Order(); //onstruimos el pedido
         o.setUser(u);
-        o.getItems().addAll(cart.list());
+        o.getItems().addAll(cart.list()); //copiamos lineas
         o.getItems().forEach(i -> i.setOrder(o));
 
         orderRepo.save(o);
-        cart.clear();
+        cart.clear();  //vaciamos carrito
         return "redirect:/?orderOk";
     }
 
     @PostMapping("/remove/{idx}")
-    public String remove(@PathVariable int idx) {
+    public String remove(@PathVariable int idx) { //quitamos el pedido que queremos quitar con la pos en la lista
         cart.remove(idx);
         return "redirect:/cart";
     }

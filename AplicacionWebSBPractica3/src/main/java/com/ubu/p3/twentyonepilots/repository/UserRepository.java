@@ -7,5 +7,6 @@ import java.util.Optional;
 
 
 public interface UserRepository extends JpaRepository<User,Long> {
+    //busca usuario por nombre de login único
     Optional<User> findByUsername(String username);
 }

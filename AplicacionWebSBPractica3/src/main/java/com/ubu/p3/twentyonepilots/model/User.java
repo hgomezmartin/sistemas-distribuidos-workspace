@@ -9,6 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * usuario registrado Implementa UserDetails para integrarse con Spring Security
+ */
+
 @Entity
 @Getter
 @Setter
@@ -37,6 +41,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
     }
+
     @Override
     public boolean isAccountNonExpired(){
         return true;

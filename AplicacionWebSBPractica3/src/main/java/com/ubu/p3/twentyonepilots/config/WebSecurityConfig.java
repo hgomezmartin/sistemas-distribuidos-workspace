@@ -13,22 +13,20 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity        // si usas @PreAuthorize, etc.
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
-    // beans “independientes”
-
+    // bean: codif de contraseñas
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // el mismo que usas en UserService.register()
+        // algoritmo de generador de hash de contraseñas
         return new BCryptPasswordEncoder();
     }
 
     // autenticación
 
     @Bean
-    public DaoAuthenticationProvider authProvider(UserService userService,
-                                                  PasswordEncoder encoder) {
+    public DaoAuthenticationProvider authProvider(UserService userService, PasswordEncoder encoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(encoder);
@@ -44,7 +42,7 @@ public class WebSecurityConfig {
 
         http.authenticationProvider(authProvider)           // lo añadimos
                 .authorizeHttpRequests(auth -> auth
-
+                        //zonas publicas
                         .requestMatchers("/", "/login", "/register", "/merch/**", "/tickets/**", "/css/**", "/images/**").permitAll()
 
                         // xonas solo para usuarios logueados
@@ -58,14 +56,14 @@ public class WebSecurityConfig {
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/login?error")
+                        .defaultSuccessUrl("/", true) // redirect tras login OK
+                        .failureUrl("/login?error") //redirect si falla
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/logout-success")
-                        .invalidateHttpSession(true)
+                        .invalidateHttpSession(true) //destruye la sesion
                         .permitAll()
                 );
 

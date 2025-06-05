@@ -7,17 +7,29 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * gestion de producots
+ */
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository repo;
 
-    public List<Product> list() { return repo.findAll(); }
+    public List<Product> list() {
+        return repo.findAll();
+    }
 
-    public Product get(Long id)  { return repo.findById(id).orElseThrow(); }
+    public Product get(Long id)  {
+        return repo.findById(id).orElseThrow();
+    }
 
-    public Product save(Product p) { return repo.save(p); }
+    public Product save(Product p) {
+        return repo.save(p);
+    }
 
-    public void delete(Long id) { repo.deleteById(id); }
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
 }

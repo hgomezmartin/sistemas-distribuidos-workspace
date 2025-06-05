@@ -1,4 +1,4 @@
-# Práctica 2 – Sistemas Distribuidos: Spring Boot + Flask + MySQ(Docker-Compose)
+# Práctica 3- Taller – Sistemas Distribuidos: Spring Boot + MySQL + seguridad
 ## Como poder ejecutar la práctica
 ### Primero clona el repositorio en el directorio que más desee
 `git clone https://github.com/hgomezmartin/sistemas-distribuidos-workspace.git`
@@ -9,7 +9,7 @@
 ### construye las imágenes Docker
 `docker compose build`
 
-### levanta las imagenes de Docker (MySql + Spring Boot + Flask)
+### levanta las imagenes de Docker (MySql + Spring Boot)
 #### Con log:
 `docker compose up`
 #### Sin log:
@@ -19,33 +19,29 @@
 `docker compose ps`
 `docker compose logs -f` 
 
-## URLs principales
-### Home + login:
+## URLs
+### Principal 
 `http://localhost:8080/`
 
-### Pantalla para lanzar manualmente cualquier endpoint de Flask
-`http://localhost:8080/api-demo`
+### Zonas Publicas
+`http://localhost:8080/`
+`http://localhost:8080/login`
+`http://localhost:8080/register`
+`http://localhost:8080/merch`
+`http://localhost:8080/tickets`
 
-## Credenciales usadas en la DB:
+### Zonas solo para usuarios logueados
+`http://localhost:8080/profile`
+`http://localhost:8080/cart`
+
+### Zonas para el administrador (ROL_ADMIN) (no me ha dado tiempo a implementar todas, solo una)
+`http://localhost:8080/users`
+
+
+## Credenciales usadas en la DB (puedes registrarte para añadir mas usuarios):
 ### Usuario | Contraseña:
-- Peter    | pass123
-- Celio    | celio123
-- Fernando | torres2009
-- Rodolfo  | rodolfo123
+- admin    | admintop2025
 
-## Endpoints de la api flask:
-### Ruta | Tipo de prueba
-- `/ping`                      | Comunicación
-- `/api/file/file1.txt`        | Ok fichero
-- `/api/file/noexite.txt`      | FileNotFound
-- `/api/file/confidential.txt` | PermissionError (simulado)
-- `/api/db/users`              | Ok BD
-- `/api/db/force-error`        | Error SQL
-- `/api/pokemon/pikachu`       | API externa ok
-- `/api/pokemon/iniesta`       | API externa error 404
-- `/api/timeout`               | Provoca timeor (RestTemplate corta a 5s)
-
-NOTA: No obstante, si tienes alguna duda, en la carpeta api-frontend-capturas hay capturas para ver como se pueden usar estos endpoits en el frontend. No obtante, tambien puedes probarlo con Postman, donde en la carpeta del proyecto llamada Postman puedes comprobar como se realizan y que devuelven.
 
 ## Parar y limpiar e proyecto
 ### Detiene contenedores: 

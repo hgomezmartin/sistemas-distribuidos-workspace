@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ *  Registro de nuevos usuarios, cambio de perfil / rol
+ */
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -16,7 +20,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository repo;
     private final PasswordEncoder encoder;
 
-
+    //alta de usuario
     public User register(String username, String rawPass, String email) {
         repo.findByUsername(username).ifPresent(u -> {
             throw new IllegalArgumentException("El usuario ya existe");
@@ -24,7 +28,7 @@ public class UserService implements UserDetailsService {
 
         User u = new User();
         u.setUsername(username);
-        u.setPassword(encoder.encode(rawPass));
+        u.setPassword(encoder.encode(rawPass)); //BCrypt
         u.setEmail(email);
         u.setRole("ROLE_USER");          // rol por defecto
         return repo.save(u);
@@ -34,13 +38,11 @@ public class UserService implements UserDetailsService {
     public List<User> list() {
         return repo.findAll();
     }
-
-
     public User get(Long id) {
         return repo.findById(id).orElseThrow();
     }
 
-
+    //prefil propio, no implementado por no tener tiempo
     public User updateProfile(Long id,
                               String username,
                               String rawPass,
@@ -60,7 +62,7 @@ public class UserService implements UserDetailsService {
         return repo.save(u);
     }
 
-
+    //implementado cambio de rol, unico crud q me dio tiempo a implementar (el mas sencillo)
     public void updateRole(Long id, String newRole) {
         if(!newRole.equals("ROLE_USER") && !newRole.equals("ROLE_ADMIN"))
             throw new IllegalArgumentException("Rol no válido");
@@ -69,13 +71,13 @@ public class UserService implements UserDetailsService {
         repo.save(u);
     }
 
-
+    //sin implementar
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = repo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        // el builder quita automáticamente el prefijo "ROLE_"
+        // el builder quita automticamente el prefijo ROLE_
         return org.springframework.security.core.userdetails.User
                 .withUsername(u.getUsername())
                 .password(u.getPassword())

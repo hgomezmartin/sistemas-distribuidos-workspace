@@ -4,6 +4,7 @@ Proyectos finalizados hasta la fecha:
 - Script xml con Ant
 - P1 Sokets
 - P2 Aplicacion Web con Springboot + Flask 
+- P3 Taller Aplicacion Web implementando seguridad
 
 Proyectos en curso
 - NULL 

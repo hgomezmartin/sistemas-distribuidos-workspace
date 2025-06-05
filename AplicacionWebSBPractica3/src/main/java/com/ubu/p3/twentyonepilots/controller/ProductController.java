@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * CRUD de merchandising.
+ *  – /merch  lo ve todo ek mundo público
+ *  – /merch/new, /save, /edit, /delete  -> solo ADMIN (no me ha dado tiempo a implementarlo en las vistas)
+ */
+
 @Controller
 @RequestMapping("/merch")
 @RequiredArgsConstructor
@@ -29,7 +35,7 @@ public class ProductController {
         return "merchandise";
     }
 
-    // crear / editar (solo admin)
+    // crear / editar (solo admin) - no me ha dado tiempo a implemaentarlo en la vista
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/new")
     public String newForm(Model m) {
@@ -38,14 +44,14 @@ public class ProductController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/{id}/edit")
+    @GetMapping("/{id}/edit") //editar el producto
     public String editForm(@PathVariable Long id, Model m) {
         m.addAttribute("product", srv.get(id));
         return "merchandise/form";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/save")
+    @PostMapping("/save") //guardamos
     public String save(@Valid Product product, BindingResult br) { //@valid implementacion
         if (br.hasErrors()) return "merchandise/form";
         srv.save(product);
@@ -53,7 +59,7 @@ public class ProductController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/{id}/delete")
+    @PostMapping("/{id}/delete") //eliminamos producto
     public String delete(@PathVariable Long id) {
         srv.delete(id);
         return "redirect:/merch";
