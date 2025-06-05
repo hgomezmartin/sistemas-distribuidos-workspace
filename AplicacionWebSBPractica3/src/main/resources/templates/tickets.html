@@ -26,7 +26,8 @@
                     <p class="fw-bold mt-auto"
                        th:text="${#numbers.formatDecimal(ticket.price,1,'COMMA',2,'POINT')} + ' €'">0 €</p>
 
-                    <form th:action="@{/cart/addTicket/{id}(id=${ticket.id})}" method="post">
+                    <!--<form th:action="@{/cart/addTicket/{id}(id=${ticket.id})}" method="post">-->
+                    <form th:action="@{/tickets/{id}/add(id=${ticket.id})}" method="post">
                         <button class="btn btn-tp w-100">Añadir al carrito</button>
                     </form>
                 </div>

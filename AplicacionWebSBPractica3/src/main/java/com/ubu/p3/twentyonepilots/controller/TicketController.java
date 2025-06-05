@@ -31,7 +31,9 @@ public class TicketController {
     //CRUD admin
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/new")
-    public String newForm(Model m){ m.addAttribute("ticket", new Ticket()); return "tickets/form"; }
+    public String newForm(Model m){ m.addAttribute("ticket", new Ticket());
+        return "tickets/form";
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}/edit")

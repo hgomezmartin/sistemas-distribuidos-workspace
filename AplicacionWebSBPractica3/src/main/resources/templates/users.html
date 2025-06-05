@@ -23,7 +23,8 @@
             <td th:text="${u.email}">mail</td>
             <td th:text="${u.role}">ROLE_USER</td>
             <td>
-                <form th:action="@{/users/toggle/{id}(id=${u.id})}" method="post">
+                <!--<form th:action="@{/users/toggle/{id}(id=${u.id})}" method="post">-->
+                <form th:action="@{/admin/users/{id}/toggle(id=${u.id})}" method="post">
                     <button class="btn btn-warning btn-sm">Cambiar rol</button>
                 </form>
             </td>

@@ -19,6 +19,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li><a class="nav-link" th:href="@{/}">Inicio</a></li>
                 <li><a class="nav-link" th:href="@{/merch}">Tienda</a></li>
+                <li><a class="nav-link" th:href="@{/tickets}">Tickets</a></li>
 
                 <!-- Si NO está autenticado, muestro Entrar / Registro -->
                 <li sec:authorize="!isAuthenticated()">
@@ -36,7 +37,13 @@
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                         <li><a class="dropdown-item" th:href="@{/profile}">Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" th:href="@{/logout}">Salir</a></li>
+
+                        <!-- botón POST -->
+                        <li>
+                            <form th:action="@{/logout}" method="post" class="m-0">
+                                <button class="dropdown-item" type="submit">Salir</button>
+                            </form>
+                        </li>
                     </ul>
                 </li>
             </ul>
