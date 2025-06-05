@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<section class="container my-5">
+    <h2>Tu carrito</h2>
+
+    <table class="table mt-4" th:if="${items}">
+        <thead class="table-dark">
+        <tr>
+            <th>Artículo</th><th>Cantidad</th><th>Subtotal</th><th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="it : ${items}">
+            <td th:text="${it.name}">Producto</td>
+            <td th:text="${it.quantity}">1</td>
+            <td th:text="${#numbers.formatDecimal(it.subtotal,1,'COMMA',2,'POINT')} + ' €'">0 €</td>
+            <td>
+                <form th:action="@{/cart/remove/{id}(id=${it.id})}" method="post">
+                    <button class="btn btn-sm btn-danger">Quitar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+
+        <tfoot class="table-dark">
+        <tr>
+            <th>Total</th><th></th>
+            <th th:text="${#numbers.formatDecimal(total,1,'COMMA',2,'POINT')} + ' €'">0 €</th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
+
+    <p th:if="${#lists.isEmpty(items)}" class="text-center mt-4">
+        El carrito está vacío.
+    </p>
+
+    <div th:if="${!#lists.isEmpty(items)}" class="text-end">
+        <form th:action="@{/cart/checkout}" method="post">
+            <button class="btn btn-tp">Pagar</button>
+        </form>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

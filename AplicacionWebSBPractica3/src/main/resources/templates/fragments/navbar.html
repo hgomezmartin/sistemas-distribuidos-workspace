@@ -1,0 +1,47 @@
+<!-- src/main/resources/templates/fragments/navbar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+</head>
+<body>
+<!-- Definimos el fragmento "navbar" en el propio <nav>: -->
+<nav class="navbar navbar-expand-lg shadow-sm" th:fragment="navbar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">twenty one pilots</a>
+
+        <button class="navbar-toggler bg-light" type="button"
+                data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li><a class="nav-link" th:href="@{/}">Inicio</a></li>
+                <li><a class="nav-link" th:href="@{/merch}">Tienda</a></li>
+
+                <!-- Si NO está autenticado, muestro Entrar / Registro -->
+                <li sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/login}">Entrar</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/register}">Registro</a>
+                </li>
+
+                <!-- Si SÍ está autenticado, muestro el nombre y un dropdown -->
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <span sec:authentication="name"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/profile}">Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Salir</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

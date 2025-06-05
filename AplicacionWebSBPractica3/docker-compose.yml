@@ -10,7 +10,8 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - db:/var/lib/mysql
-      - ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
+      #- ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
+      - ./sql:/docker-entrypoint-initdb.d
 
 
   spring-app:
