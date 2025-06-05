@@ -5,6 +5,7 @@ import com.ubu.p3.twentyonepilots.service.CartService;
 import com.ubu.p3.twentyonepilots.service.TicketService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class TicketController {
 
+    @Autowired
     private final TicketService srv;
     private final CartService cart;
 

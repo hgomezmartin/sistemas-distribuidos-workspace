@@ -48,7 +48,7 @@ public class WebSecurityConfig {
                                 "/", "/login", "/register",
                                 "/css/**", "/js/**", "/images/**")
                         .permitAll()
-                        .requestMatchers("/merch/**", "/tickets/**").authenticated()
+                        .requestMatchers("/merch/**", "/tickets/**", "/profile/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

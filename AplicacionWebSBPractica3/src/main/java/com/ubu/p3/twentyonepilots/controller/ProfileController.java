@@ -20,7 +20,8 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String viewProfile(Authentication auth, Model model) {
-        User u = (User) auth.getPrincipal();
+        String username = auth.getName();
+        User u = repo.findByUsername(username).orElseThrow(); //añadido calu
         model.addAttribute("user", u);
         return "profile";                    // templates/profile.html
     }
@@ -30,7 +31,9 @@ public class ProfileController {
                                 @RequestParam String email,
                                 @RequestParam String password) {
 
-        User u = (User) auth.getPrincipal();
+        String username = auth.getName(); //añadido calu
+        User u = repo.findByUsername(username).orElseThrow();
+
         u.setEmail(email);
         if (!password.isBlank()) {
             u.setPassword(encoder.encode(password));
